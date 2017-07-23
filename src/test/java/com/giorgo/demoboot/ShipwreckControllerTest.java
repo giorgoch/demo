@@ -43,7 +43,7 @@ public class ShipwreckControllerTest {
 	}
 
 	@Test
-	public void testController() {
+	public void testgetr() {
 		RestTemplate rest = new RestTemplate();
 
 		String id = "1";
@@ -51,5 +51,16 @@ public class ShipwreckControllerTest {
 		System.out.println(response+"edo");
 		assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
 	}
+	
+	@Test
+	public void testpost() {
+		RestTemplate rest = new RestTemplate();
+
+		String id = "1";
+		ResponseEntity<String> response = rest.getForEntity("http://localhost:8080/api/v1/shipwrecks.1", String.class);
+		System.out.println(response+"edo");
+		assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
+	}
+
 
 }
