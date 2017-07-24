@@ -14,39 +14,48 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.giorgo.demoboot.model.Person;
 import com.giorgo.demoboot.repository.PersonRepository;
+import com.giorgo.demoboot.service.PersonService;
 
 @RestController
 @RequestMapping("api/v2")
 public class PersonController {
 
 	@Autowired
-	PersonRepository personRepository;
+	PersonService personService;
 
 	@GetMapping("persons")
 	public List<Person> list() {
-		return personRepository.findAll();
+
+		return personService.getAll(); /// personRepository.findAll();
 	}
 
 	@PostMapping("person/{id}")
 	public Person create(@RequestBody Person person) {
-		return personRepository.saveAndFlush(person);
+		return personService.create(person);// personRepository.saveAndFlush(person);
 	}
 
 	@GetMapping("persons/{id}")
 	public Person get(@PathVariable Long id) {
-		return personRepository.findOne(id);
+		return personService.getOne(id); // personRepository.findOne(id);
 	}
 
 	@PutMapping("person/{id}")
 	public Person update(@PathVariable Long id, @RequestBody Person person) {
-		Person p = personRepository.findOne(id);
+
+		Person p = personService.getOne(id);/// personRepository.findOne(id);
+
 		BeanUtils.copyProperties(person, p);
-		return personRepository.saveAndFlush(p);
+
+		return personService.create(p);// personRepository.saveAndFlush(p);
 	}
 
 	public Person delete(@PathVariable Long id) {
-		Person person = personRepository.findOne(id);
-		personRepository.delete(person);
+
+		Person person = personService.getOne(id); // personRepository.findOne(id);
+
+		personService.delete(person);
+		// personRepository.delete(person);
+
 		return person;
 	}
 
